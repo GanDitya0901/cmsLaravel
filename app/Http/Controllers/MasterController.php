@@ -21,9 +21,10 @@ class MasterController extends Controller
     }
 
     public function showAdmin(Request $request) {
-        $query = User::query()->orderBy("id", "asc")->where('role', 'admin');
+        $query = User::query()->where('role', 'admin');
         $date = $request->dateFilter;
-        $username = $request->usernameFilter;
+
+        $alphabetical = $request->alphabeticalFilter;
 
         switch ($date) {
             case "today":
@@ -37,15 +38,17 @@ class MasterController extends Controller
                 break;
         }
 
-        if($request->filled('usernameFilter')) {
-            $query->where('username', $username);
+        if($request->filled('alphabeticalFilter') && $alphabetical == 'asc') {
+            $query->orderBy('username', 'asc');
+        } elseif($request->filled('alphabeticalFilter') && $alphabetical == 'desc') {
+            $query->orderBy('username', 'desc');
+        } else {
+            $query->orderBy('id', 'asc');
         }
 
         $users = $query->paginate(10);
 
-        $adminUsername = User::where('role', 'admin')->pluck('username', 'id');
-
-        return view("master.showAdmin", compact('users', 'adminUsername'));
+        return view("master.showAdmin", compact('users'));
     }
 
     public function regAdminForm() {
