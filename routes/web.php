@@ -79,7 +79,7 @@ Route::middleware(['auth', 'guestRole'])->controller(CommentController::class)->
     Route::delete('/page/{page}', 'destroyPage')->name('deletePage');
 }); */
 
-/* ==Category Routes== */
+/* ==Category Routes for Auth Master and Admin== */
 Route::middleware(['auth', 'masterOrAdmin'])->controller(CategoryController::class)->group(function() {
     Route::get('/category', 'showAllCategories')->name('show.allCategories');
     Route::get('/categoryForm', 'createForm')->name('show.categoryForm');

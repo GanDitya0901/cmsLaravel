@@ -221,14 +221,14 @@
                                 class="mx-2 p-2 bg-amber-300 rounded-md hover:bg-amber-400 hover:text-white">View</a>
                             <a href="{{ route('show.editForm', $data->id) }}"
                                 class="mx-2 p-2 bg-amber-300 rounded-md hover:bg-amber-400 hover:text-white">Update</a>
-                            <div x-data="{ openModal: false }" class="cursor-pointer">
+                            <div x-data="{ openModal: false }">
                                 <button @click="openModal = true"
                                     class="mx-2 p-2 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-700">Delete
                                 </button>
 
                                 {{-- Modal --}}
                                 <div x-show="openModal"
-                                    class="fixed inset-0 z-50 flex items-center justify-center">
+                                    class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50">
                                     <div class="flex w-96 flex-col items-center gap-3 rounded-md bg-white p-6 shadow-md"
                                         @click.away="openModal = false">
                                         <h1 class="font-bold">Are you sure?</h1>

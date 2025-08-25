@@ -28,5 +28,4 @@
             <p class="text-gray-500">All Categories</p>
         </div>
     </div>
-
 </x-admin-layout>
