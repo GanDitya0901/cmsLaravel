@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\PageSection;
 use App\Models\Page;
+
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PageSectionController extends Controller
 {
@@ -17,12 +20,28 @@ class PageSectionController extends Controller
     public function createSection(Request $request, Page $page) {
         $request->validate([
             'type' => 'string|required', 
-            'content' => 'nullable|array'
+            'content' => 'nullable|array', 
+            'content.file' => 'nullable|image'
         ]);
+
+        $content = $request->input('content', []);
+
+        if($request->hasFile('content.file')) {
+            $manager = new ImageManager(new Driver());
+
+            $image = $manager->read($request->file('content.file'));
+            $image->scale(width: 300);
+
+            $imageName = time() . '.' . $request->file('content.file')->getClientOriginalExtension();
+
+            $image->save(public_path('images/' . $imageName));
+            
+            $content['file'] = 'images/' . $imageName;
+        }
 
         $page->sections()->create([
             'type' => $request->type,
-            'content' => $request->input('content', []), 
+            'content' => $content, 
             'position' => $page->sections()->count() + 1, 
             'page_id' => $page->id
         ]);

@@ -5,31 +5,81 @@
         <div class="flex justify-center">
             <h1 class="font-bold tracking-wide text-lg">Add Section</h1>
         </div>
-        <form action="{{ route('createSection', $page->id) }}" method="POST" class="mt-4 p-2">
+        <form action="{{ route('createSection', $page->id) }}" method="POST" enctype="multipart/form-data" 
+            class="mt-4 p-2" x-data="{ type: '' }">
             @csrf
 
             <div class="flex items-center gap-3">
                 <label for="type">Select Type: </label>
-                <select name="type" id="type" class="w-40 bg-gray-200 rounded-md py-1 px-2">
+                <select name="type" id="type" x-model="type" class="w-40 bg-gray-200 rounded-md py-1 px-2">
+                    <option value="">Please Choose</option>
                     <option value="hero">Hero Banner</option>
-                    <option value="text">Text Block</option>
+                    <option value="text_block">Text Block</option>
+                    <option value="image">Image</option>
+                    <option value="gallery">Gallery</option>
                 </select>
             </div>
-            <div class="flex flex-col mt-6">
-                <label for="content[heading]">Heading</label>
-                <input name="content[heading]" placeholder="Enter heading"
-                    class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">{{ old('content[heading]') }}</input>
+            {{-- Hero Fields --}}
+            <div x-show="type === 'hero'">
+                <div class="flex flex-col mt-6">
+                    <label for="content[heading]">Heading</label>
+                    <input name="content[heading]" type="text" placeholder="Enter heading"
+                        class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">{{ old('content[heading]') }}</input>
 
-                <label for="content[body]" class="mt-4">Body</label>
-                <textarea name="content[body]" id="content[body]" cols="30" rows="5"
-                    class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300"></textarea>
+                    <label for="content[body]" class="mt-4">Body</label>
+                    <textarea name="content[body]" id="content[body]" cols="30" rows="5" type="text"
+                        class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <a href="{{ route('show.allPages') }}"
+                        class="bg-gray-300 py-1 px-3 rounded-md hover:bg-gray-500 hover:text-white">Back</a>
+                    <button class="bg-amber-300 py-1 px-3 rounded-md cursor-pointer hover:bg-amber-400 hover:text-white"
+                        type="submit">Submit</button>
+                </div>
             </div>
 
-            <div class="flex justify-end gap-3 mt-6">
-                <a href="{{ route('show.allPages') }}"
-                    class="bg-gray-300 py-1 px-3 rounded-md hover:bg-gray-500 hover:text-white">Back</a>
-                <button class="bg-amber-300 py-1 px-3 rounded-md cursor-pointer hover:bg-amber-400 hover:text-white"
-                    type="submit">Submit</button>
+            {{-- Text Block Fields --}}
+            <div x-show="type === 'text_block'">
+                <div class="flex flex-col mt-6">
+                    <label for="content[title]">Title</label>
+                    <input name="content[title]" placeholder="Enter title" type="text"
+                        class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">{{ old('content[title]') }}</input>
+
+                    <label for="content[paragraph]" class="mt-4">Paragraph</label>
+                    <textarea name="content[paragraph]" id="content[paragraph]" cols="30" rows="5" type="text"
+                        class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <a href="{{ route('show.allPages') }}"
+                        class="bg-gray-300 py-1 px-3 rounded-md hover:bg-gray-500 hover:text-white">Back</a>
+                    <button class="bg-amber-300 py-1 px-3 rounded-md cursor-pointer hover:bg-amber-400 hover:text-white"
+                        type="submit">Submit</button>
+                </div>
+            </div>
+
+            {{-- Image Fields --}}
+            <div x-show="type === 'image'">
+                <div class="flex flex-col mt-6">
+                    <label for="content[file]">Image</label>
+                    <input name="content[file]" placeholder="Enter file" type="filename"
+                        class="bg-gray-200 rounded-md w-64 mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">
+                    </input>
+
+                    <label for="content[alt]" class="mt-4">Alt Name</label>
+                    <input name="content[alt]" placeholder="Enter alt name" type="text"
+                        class="bg-gray-200 rounded-md w-64 mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">
+                        {{ old('conent[alt]') }}
+                    </input>
+                </div>
+
+                <div class="flex justify-end gap-3 mt-6">
+                    <a href="{{ route('show.allPages') }}"
+                        class="bg-gray-300 py-1 px-3 rounded-md hover:bg-gray-500 hover:text-white">Back</a>
+                    <button class="bg-amber-300 py-1 px-3 rounded-md cursor-pointer hover:bg-amber-400 hover:text-white"
+                        type="submit">Submit</button>
+                </div>
             </div>
         </form>
     </x-section-layout>
@@ -76,7 +126,8 @@
                                             class="bg-gray-400 text-white py-1 px-3 rounded-md cursor-pointer hover:bg-gray-500">
                                             Cancel
                                         </button>
-                                        <form action="{{ route('deleteSection', [$data->page_id, $data->id]) }}" method="POST">
+                                        <form action="{{ route('deleteSection', [$data->page_id, $data->id]) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
 
