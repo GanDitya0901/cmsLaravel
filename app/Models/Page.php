@@ -10,12 +10,11 @@ class Page extends Model
     protected $fillable = [
         "title",
         "slug",
-        "body",
     ];
 
-    protected $casts = [
-        "body" => "array",
-    ];
+    public function sections() {
+        return $this->hasMany(PageSection::class)->orderBy('position');
+    }
 
     /** @use HasFactory<\Database\Factories\PageFactory> */
     use HasFactory;

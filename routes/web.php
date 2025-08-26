@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageSectionController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,17 +68,25 @@ Route::middleware(['auth', 'guestRole'])->controller(CommentController::class)->
     Route::post('/post/{post}','createComment')->name('createComment');
 });
 
-/* ==Page Routes== */
-/* Route::middleware(['auth', 'admin'])->controller(PageController::class)->group(function() {
-    Route::get('/page', 'showAllPages')->name('show.allPages');
-    Route::get('/page/{page}', 'showPage')->name('show.page'); 
-    Route::get('/pageForm', 'createForm')->name('show.pageForm');
-    Route::get('/page/pageEdit/{page}', 'editForm')->name('show.pageEditForm');
+/* ==Page Routes for Auth Master and Admin== */
+Route::middleware(['auth', 'masterOrAdmin'])->controller(PageController::class)->group(function() {
+    Route::get('pages', 'showAllPages')->name('show.allPages');
+    Route::get('/pageForm', 'pageForm')->name('show.pageForm');
+    Route::get('/page/editForm/{page}', 'editForm')->name('show.pageEditForm');
 
-    Route::post('page/pageForm', 'createPage')->name('createPage');
-    Route::put('/page/pageEdit/{page}', 'updatePage')->name('updatePage');
-    Route::delete('/page/{page}', 'destroyPage')->name('deletePage');
-}); */
+    Route::post('pageForm', 'createPage')->name('createPage');
+    Route::put('/page/editForm/{page}', 'editPage')->name('editPage');
+    Route::delete('/page/{page}', 'deletePage')->name('deletePage');
+});
+
+/* ==PageSection Routes for Auth Master and Admin== */
+Route::middleware(['auth', 'masterOrAdmin'])->controller(PageSectionController::class)->group(function() {
+    Route::get('/page/{page}/sections', 'showAllSections')->name('show.allSections');
+
+    Route::post('/page/{page}/sectionForm', 'createSection')->name('createSection');
+    Route::put('/page/{page}/editForm/{section}', 'editSection')->name('editSection');
+    Route::delete('/page/{page}/section/{section}', 'deleteSection')->name('deleteSection');
+});
 
 /* ==Category Routes for Auth Master and Admin== */
 Route::middleware(['auth', 'masterOrAdmin'])->controller(CategoryController::class)->group(function() {
