@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class PageSectionController extends Controller
 {
+    public function showSection(Page $page) {
+        return view('page.section', ['page' => $page]);
+    }
+    
     public function createSection(Request $request, Page $page) {
         $request->validate([
             'type' => 'string|required', 
@@ -24,7 +28,7 @@ class PageSectionController extends Controller
         return redirect()->route('show.allPages');
     }
 
-    public function editSection(PageSection $pageSection, Request $request, Page $page) {
+    public function editSection(PageSection $pageSection, Request $request) {
         $pageSection->update([
             'content' => $request->input('content', [])
         ]);

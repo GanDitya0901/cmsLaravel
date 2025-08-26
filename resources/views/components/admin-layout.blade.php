@@ -63,20 +63,19 @@
                             <h3 class="inline">Category Management</h3>
                         </div>
                     </a>
-                    {{-- <a href="{{ route('show.allPages') }}"
+
+                    <a href="{{ route('show.allPages') }}"
                         class="text-black font-semibold p-2 rounded group hover:bg-amber-400 hover:text-white">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-[20px] h-[20px] text-gray-800 inline mb-1 mr-1 group-hover:stroke-white group-hover:fill-white">
-                                <path
-                                    d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                                <path
-                                    d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                                <path fill-rule="evenodd"
+                                    d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                                    clip-rule="evenodd" />
                             </svg>
-
                             <h3 class="inline">Page Management</h3>
                         </div>
-                    </a> --}}
+                    </a>
                 </div>
 
                 <div class="my-2 text-gray-400 flex flex-col font-light mx-2">Other Menu

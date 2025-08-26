@@ -20,7 +20,7 @@
                 <div class="col-span-2">
                     <label for="slug" class="font-semibold">Slug</label>
                     <input type="text" placeholder="Enter slug" name="slug"
-                        class="bg-gray-100 p-2 mt-2 rounded-md w-full active:outline-2 active outline-amber-300">{{ old('content') }}
+                        class="bg-gray-100 p-2 mt-2 rounded-md w-full active:outline-2 active outline-amber-300">{{ old('slug') }}
                     </input>
                     @error('slug')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>

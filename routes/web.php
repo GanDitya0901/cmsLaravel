@@ -81,7 +81,7 @@ Route::middleware(['auth', 'masterOrAdmin'])->controller(PageController::class)-
 
 /* ==PageSection Routes for Auth Master and Admin== */
 Route::middleware(['auth', 'masterOrAdmin'])->controller(PageSectionController::class)->group(function() {
-    Route::get('/page/{page}/sections', 'showAllSections')->name('show.allSections');
+    Route::get('/page/{page}/section', 'showSection')->name('show.section');
 
     Route::post('/page/{page}/sectionForm', 'createSection')->name('createSection');
     Route::put('/page/{page}/editForm/{section}', 'editSection')->name('editSection');
