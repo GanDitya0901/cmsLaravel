@@ -9,8 +9,8 @@
 
                 <div class="col-span-2">
                     <label for="name" class="font-semibold">Category Name</label>
-                    <input type="text" placeholder="Enter name" name="name" value="{{ old('name') }}"
-                        class="bg-gray-100 p-2 mt-2 rounded-md w-full active:outline-2 active outline-amber-300">
+                    <input type="text" placeholder="Enter name" name="name" class="bg-gray-100 p-2 mt-2 rounded-md w-full active:outline-2 active outline-amber-300">
+                    {{ old('name') }}
                     </input>
                     @error('name')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>

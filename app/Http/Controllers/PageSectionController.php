@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 
 class PageSectionController extends Controller
 {
-    public function showSection(Page $page) {
-        return view('page.section', ['page' => $page]);
+    public function showSection(Request $request, Page $page) {
+        $pageSection = PageSection::with('page')->where('page_id', $page->id)->get();
+
+        return view('page.section', compact('pageSection', 'page'));
     }
     
     public function createSection(Request $request, Page $page) {
@@ -21,11 +23,11 @@ class PageSectionController extends Controller
         $page->sections()->create([
             'type' => $request->type,
             'content' => $request->input('content', []), 
-            'position' => $page->sections()->count() + 1
-
+            'position' => $page->sections()->count() + 1, 
+            'page_id' => $page->id
         ]);
 
-        return redirect()->route('show.allPages');
+        return redirect()->route('show.section', $page->id);
     }
 
     public function editSection(PageSection $pageSection, Request $request) {
