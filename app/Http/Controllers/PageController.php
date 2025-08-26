@@ -8,58 +8,41 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function showAllPages() {
-        $pages = Page::orderBy("id","asc")->paginate(10);
-
-        return view('pages.allPages', ['pages' => $pages]);
+        $pages = Page::all();
+        return view('page.showAll', compact('pages'));
     }
 
-    public function showPage($slug) {
-        $page = Page::where('slug', $slug)->firstOrFail();
-
-        return view('pages.showPage', compact('page'));
+    public function pagePost() {
+        return view('page.pageForm');
     }
 
-    public function createForm() {
-        return view('pages.createForm');
-    }
-
-    public function createPage(Request $request) {
+    public function cretePage(Request $request) {
         $validated = $request->validate([
-            'title'=> 'string|min:5|max:100|unique:pages,title|required',
-            'slug' => 'string|min:3|max:50|unique:pages,slug|required',
-            'body' => 'required|json'
+            'title' => 'string|min:3|max:50|unique:pages,title|required', 
+            'slug' => 'string|min:3|max:50|unique:pages,slug|required'
         ]);
 
-        Page::create([
-            'title'=> $validated['title'],
-            'slug'=> $validated['slug'],
-            'body' => json_decode($validated['body'])
-        ]);
+        Page::create($validated);
 
         return redirect()->route('show.allPages');
     }
 
     public function editForm(Page $page) {
-        return view('pages.editForm', ['page'=> $page]);
+        return view('page.editForm', ['page' => $page]);
     }
 
-    public function updatePage(Request $request, Page $page) {
+    public function editPage(Page $page, Request $request) {
         $validated = $request->validate([
-            'title' => 'string|required|min:5|max:100|unique:pages,title', 
-            'slug'=> 'string|required|min:5|max:100|unique:pages,slug,' . $page->id,
-            'body' => 'required|json'
+            'title'=> 'string|min:3|max:50|required|unique:pages,title,' . $page->id,
+            'slug' => 'string|min:3|max:50|required|unique:pages,slug,' . $page->id
         ]);
 
-        $page->update([
-            'title'=> $validated['title'],
-            'slug'=> $validated['slug'],
-            'body'=> json_decode($validated['body'])
-        ]);
+        $page->update($validated);
 
         return redirect()->route('show.allPages');
     }
 
-    public function destroyPage(Page $page) {
+    public function deletePage(Page $page) {
         $page->delete();
 
         return redirect()->route('show.allPages');
