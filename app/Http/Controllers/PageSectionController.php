@@ -21,11 +21,13 @@ class PageSectionController extends Controller
         $request->validate([
             'type' => 'string|required', 
             'content' => 'nullable|array', 
-            'content.file' => 'nullable|image'
+            'content.file' => 'nullable|image', 
+            'content.files.*' => 'nullable|image'
         ]);
 
         $content = $request->input('content', []);
 
+        /* --For single image== */
         if($request->hasFile('content.file')) {
             $manager = new ImageManager(new Driver());
 
@@ -37,6 +39,25 @@ class PageSectionController extends Controller
             $image->save(public_path('images/' . $imageName));
             
             $content['file'] = 'images/' . $imageName;
+        }
+
+        /* ==For multiple images== */
+        if($request->hasFile('content.files')) {
+            $manager = new ImageManager(new Driver());
+
+            $files = [];
+
+            foreach($request->file('content.file') as $file) {
+                $image = $manager->read($file);
+                $image->scale(width:300);
+
+                $imageName = time() .'.'. $file->getClientOriginalExtension();
+                $image->save(public_path('images/' . $imageName));
+
+                $files[] = 'images/' . $imageName;
+            }
+
+            $content['files'] = $files;
         }
 
         $page->sections()->create([

@@ -5,7 +5,7 @@
         <div class="flex justify-center">
             <h1 class="font-bold tracking-wide text-lg">Add Section</h1>
         </div>
-        <form action="{{ route('createSection', $page->id) }}" method="POST" enctype="multipart/form-data" 
+        <form action="{{ route('createSection', $page->id) }}" method="POST" enctype="multipart/form-data"
             class="mt-4 p-2" x-data="{ type: '' }">
             @csrf
 
@@ -29,7 +29,7 @@
                     <label for="content[body]" class="mt-4">Body</label>
                     <textarea name="content[body]" id="content[body]" cols="30" rows="5" type="text"
                         class="bg-gray-200 rounded-md mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300"></textarea>
-                    
+
                     <label for="content[file]">Image</label>
                     <input name="content[file]" placeholder="Enter file" type="file"
                         class="bg-gray-200 rounded-md w-64 mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300 file:rounded-xl file:bg-amber-300 file:py-1 file:px-2 hover:file:bg-amber-400 hover:file:text-white file:cursor-pointer file:mr-3">
@@ -38,7 +38,7 @@
                     <label for="content[alt]" class="mt-4">Alt Name</label>
                     <input name="content[alt]" placeholder="Enter alt name" type="text"
                         class="bg-gray-200 rounded-md w-64 mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300">
-                        {{ old('conent[alt]') }}
+                    {{ old('conent[alt]') }}
                     </input>
                 </div>
 
@@ -68,6 +68,14 @@
                     <button class="bg-amber-300 py-1 px-3 rounded-md cursor-pointer hover:bg-amber-400 hover:text-white"
                         type="submit">Submit</button>
                 </div>
+            </div>
+
+            {{-- Gallery Fields --}}
+            <div x-show="type === 'gallery'">
+                <label for="content[files][]">Image</label>
+                <input name="content[files][]" placeholder="Enter file" type="file"
+                    class="bg-gray-200 rounded-md w-64 mt-2 py-1 px-2 focus:outline-3 focus:outline-amber-300 file:rounded-xl file:bg-amber-300 file:py-1 file:px-2 hover:file:bg-amber-400 hover:file:text-white file:cursor-pointer file:mr-3">
+                </input>
             </div>
         </form>
     </x-section-layout>
