@@ -12,7 +12,7 @@ use App\Models\Page;
 
 class GuestController extends Controller
 {
-    public function showHome(Request $request, Page $pages){
+    public function showHome(Request $request){
         $query = Post::with(['user', 'comments', 'categories'])->orderBy('created_at','desc');
         $categoryFilter = $request->categoryFilter;
 
@@ -25,7 +25,9 @@ class GuestController extends Controller
         $posts = $query->paginate(10);
         $categories = Category::has('posts')->get();
 
-        return view("guest.landingpage", compact('posts', 'categories','pages'));
+        $page = Page::where('slug', 'home')->with('sections')->firstOrFail();
+
+        return view("guest.landingpage", compact('posts', 'categories','page'));
     }
 
     public function showAboutUs() {

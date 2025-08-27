@@ -8,9 +8,9 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="bg-linear-to-b from-amber-100 from-10% to-white">
     <div class="h-auto">
-        <header class="w-auto m-3 p-3 flex justify-between items-center shadow rounded-2xl">
+        <header class="w-auto m-3 p-3 flex justify-between items-center shadow rounded-2xl bg-white">
             <div class="font-bold">
                 CMS
             </div>

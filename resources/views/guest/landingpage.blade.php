@@ -3,11 +3,30 @@
 @endphp
 
 <x-guest-layout>
+    @foreach ($page->sections as $section)
+        @if ($section->type === 'hero')
+            <section class="mx-auto max-w-full mb-5">
+                <div class="md:flex md:items-center md:gap-3">
+                    <div class="text-center mb-5 md:text-left">
+                        <h1 class="font-bold text-lg mb-2">{{ $section->content['heading'] ?? '' }}</h1>
+                        <p class="">{{ $section->content['body'] ?? '' }}</p>
+                    </div>
+                    <div class="md:shrink-0">
+                        <div class="flex justify-center">
+                        <img src="{{ asset($section->content['file'] ?? '') }}" alt="{{ $section->content['alt'] ?? '' }}"
+                            class="rounded-md">
+                    </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+    @endforeach
+
+    {{-- Post Section Start --}}
     <div class="flex flex-col justify-center items-center">
         <h1 class="font-bold text-2xl mb-2">All Posts</h1>
         <div class="flex justify-between gap-2">
-            <form action="{{ route('show.home') }}" method="GET"
-                class="flex rounded-md outline-1 outline-gray-400">
+            <form action="{{ route('show.home') }}" method="GET" class="flex rounded-md outline-1 outline-gray-400">
                 <button type="submit"
                     class="group cursor-pointer rounded-tl-md rounded-bl-md bg-amber-300 px-2 py-1 hover:bg-amber-400">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -18,8 +37,11 @@
                     </svg>
                     <h3 class="inline group-hover:text-white">Filter</h3>
                 </button>
-                <select name="categoryFilter" id="categoryFilter" class="group relative border border-gray-300 bg-white text-gray-500 text-lg px-3 py-1 rounded-tr-md rounded-br-md">
-                    <option value="" selected class="absolute top-full right-0 rounded-md p-3 mt-2 shadow-md scale-y-0 group-focus:scale-y-100 origin-top duration-200">All Posts</option>
+                <select name="categoryFilter" id="categoryFilter"
+                    class="group relative border border-gray-300 bg-white text-gray-500 text-lg px-3 py-1 rounded-tr-md rounded-br-md">
+                    <option value="" selected
+                        class="absolute top-full right-0 rounded-md p-3 mt-2 shadow-md scale-y-0 group-focus:scale-y-100 origin-top duration-200">
+                        All Posts</option>
                     @foreach ($categories as $data)
                         <option value="{{ $data->id }}" {{ request('categoryFilter') == $data->id ? 'selected' : '' }}>
                             {{ $data->name }}
@@ -42,7 +64,8 @@
                 <div class="group mt-5 inline-block py-1 px-2 rounded-md hover:bg-gray-100">
                     <a href="{{ route('show.post', $data->id) }}" class="flex items-center gap-1">
                         More details
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-[15px] h-[15px] text-gray-800 inline">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-[15px] h-[15px] text-gray-800 inline">
                             <path fill-rule="evenodd"
                                 d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
                                 clip-rule="evenodd" />
@@ -59,4 +82,5 @@
             </div>
         </x-cardPost-layout>
     @endforeach
+    {{-- Post Section End --}}
 </x-guest-layout>
