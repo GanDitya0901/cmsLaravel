@@ -57,10 +57,10 @@ class PageSectionController extends Controller
         return redirect()->route('show.allPages');
     }
 
-    public function deleteSection(PageSection $pageSection) {
+    public function deleteSection(Page $page, PageSection $pageSection) {
         $pageSection->delete();
 
-        return redirect()->route('show.allPages');
+        return redirect()->route('show.section', $page->id);
     }
 
     public function reOrder(Request $request, Page $page) {

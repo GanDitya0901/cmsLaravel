@@ -40,6 +40,9 @@ Route::middleware(['auth', 'master'])->controller(MasterController::class)->grou
 /* ==Guest Routes== */
 Route::middleware(['auth', 'guestRole'])->controller(GuestController::class)->group(function() {
     Route::get('/landingPage', 'landingPage')->name('show.landingPage');
+    Route::get('/about-us', 'showAboutUs')->name('show.about_us');
+    Route::get('/contact-us', 'showContactUs')->name('show.contact_us');
+    Route::get('/gallery', 'showGallery')->name('show.gallery');
 });
 
 /* ==Admin Routes== */
@@ -84,8 +87,8 @@ Route::middleware(['auth', 'masterOrAdmin'])->controller(PageSectionController::
     Route::get('/page/{page}/section', 'showSection')->name('show.section');
 
     Route::post('/page/{page}/sectionForm', 'createSection')->name('createSection');
-    Route::put('/page/{page}/editForm/{section}', 'editSection')->name('editSection');
-    Route::delete('/page/{page}/section/{section}', 'deleteSection')->name('deleteSection');
+    Route::put('/page/{page}/editForm/{pageSection}', 'editSection')->name('editSection');
+    Route::delete('/page/{page}/section/{pageSection}', 'deleteSection')->name('deleteSection');
 });
 
 /* ==Category Routes for Auth Master and Admin== */

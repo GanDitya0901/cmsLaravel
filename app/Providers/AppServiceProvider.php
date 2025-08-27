@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+
+use App\Models\Page;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('master', function () {
             return Auth::check() && Auth::user()->role === 'master';
+        });
+
+        /* ==Everytime the layout is rendered, the Page data will be passed== */
+        View::composer('components.guest-layout', function ($view) {
+            $view->with('pages', Page::all());
         });
     }
 }

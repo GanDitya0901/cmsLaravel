@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Page;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -16,8 +18,9 @@ class MasterController extends Controller
             $query->where('role', ['admin', 'master']);
         })->count();
         $categoryCount = Category::whereHas('posts')->count();
+        $pageCount = Page::count();
 
-        return view("master.masterDashboard", compact(['adminCount', 'postCount', 'categoryCount']));
+        return view("master.masterDashboard", compact(['adminCount', 'postCount', 'categoryCount', 'pageCount']));
     }
 
     public function showAdmin(Request $request) {

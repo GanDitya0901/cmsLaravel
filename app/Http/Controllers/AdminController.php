@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,9 @@ class AdminController extends Controller
         })->count();
 
         $categoryCount = Category::whereHas('posts')->count();
+        $pageCount = Page::count();
 
-        return view('admin.adminDashboard', compact('postCount', 'categoryCount'));
+        return view('admin.adminDashboard', compact('postCount', 'categoryCount', 'pageCount'));
     }
 
 }
