@@ -33,7 +33,7 @@ class AuthController extends Controller
             } elseif($user->role === 'admin') {
                 return redirect()->route('show.adminDashboard');
             } else {
-                return redirect()->route('show.landingPage');
+                return redirect()->route('show.home');
             }
         }
 

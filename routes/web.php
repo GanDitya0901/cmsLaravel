@@ -39,7 +39,7 @@ Route::middleware(['auth', 'master'])->controller(MasterController::class)->grou
 
 /* ==Guest Routes== */
 Route::middleware(['auth', 'guestRole'])->controller(GuestController::class)->group(function() {
-    Route::get('/landingPage', 'landingPage')->name('show.landingPage');
+    Route::get('/home', 'showHome')->name('show.home');
     Route::get('/about-us', 'showAboutUs')->name('show.about_us');
     Route::get('/contact-us', 'showContactUs')->name('show.contact_us');
     Route::get('/gallery', 'showGallery')->name('show.gallery');

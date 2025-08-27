@@ -1,1 +1,1 @@
-<div>About Us works</div>
+<x-guest-layout>AboutUs Works</x-guest-layout>

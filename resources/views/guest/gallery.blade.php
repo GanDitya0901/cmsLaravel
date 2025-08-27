@@ -1,1 +1,1 @@
-<div>Gallery works</div>
+<x-guest-layout>Gallery Works</x-guest-layout>

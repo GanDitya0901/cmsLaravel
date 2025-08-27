@@ -6,7 +6,7 @@
     <div class="flex flex-col justify-center items-center">
         <h1 class="font-bold text-2xl mb-2">All Posts</h1>
         <div class="flex justify-between gap-2">
-            <form action="{{ route('show.landingPage') }}" method="GET"
+            <form action="{{ route('show.home') }}" method="GET"
                 class="flex rounded-md outline-1 outline-gray-400">
                 <button type="submit"
                     class="group cursor-pointer rounded-tl-md rounded-bl-md bg-amber-300 px-2 py-1 hover:bg-amber-400">

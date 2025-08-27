@@ -15,7 +15,6 @@
                 CMS
             </div>
             <nav class="flex items-center justify-center">
-                <a href="{{ route('show.landingPage') }}" class="font-semibold py-2 px-5 rounded-full hover:bg-amber-400 hover:text-white">Home</a>
                 @foreach ($pages as $data)
                 <a href="{{ route('show.' . $data->slug) }}" class="font-semibold py-2 px-5 rounded-full hover:bg-amber-400 hover:text-white">{{ $data->title }}</a>
                 @endforeach

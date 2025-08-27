@@ -12,7 +12,7 @@ use App\Models\Page;
 
 class GuestController extends Controller
 {
-    public function landingPage(Request $request, Page $pages){
+    public function showHome(Request $request, Page $pages){
         $query = Post::with(['user', 'comments', 'categories'])->orderBy('created_at','desc');
         $categoryFilter = $request->categoryFilter;
 
