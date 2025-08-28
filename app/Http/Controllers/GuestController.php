@@ -31,7 +31,9 @@ class GuestController extends Controller
     }
 
     public function showAboutUs() {
-        return view('guest.about-us');
+        $page = Page::where('slug', 'about_us')->with('sections')->firstOrFail();
+
+        return view('guest.about-us', compact('page'));
     }
 
     public function showContactUs() {

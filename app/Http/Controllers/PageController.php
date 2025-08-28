@@ -42,13 +42,17 @@ class PageController extends Controller
         return view('page.pageForm');
     }
 
-    public function createPage(Request $request) {
-        $validated = $request->validate([
+    public function createPage(Request $request, Page $page) {
+        $request->validate([
             'title' => 'string|min:3|max:50|unique:pages,title|required', 
             'slug' => 'string|min:3|max:50|unique:pages,slug|required'
         ]);
 
-        Page::create($validated);
+        $page->create([
+            'title' => $request->title, 
+            'slug' => $request->slug, 
+            'position' => $page->count() + 1
+        ]);
 
         return redirect()->route('show.allPages');
     }
@@ -72,5 +76,13 @@ class PageController extends Controller
         $page->delete();
 
         return redirect()->route('show.allPages');
+    }
+
+    public function reOrder(Request $request) {
+        $order = $request->input('order');
+
+        foreach($order as $item) {
+            Page::where('id', $item['id'])->update(['position' => $item['position']]);
+        }
     }
 }

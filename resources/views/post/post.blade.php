@@ -58,7 +58,7 @@
         </div>
     </x-cardPost-layout>
 
-    <div class="m-3 rounded-lg bg-white p-2 shadow-md">
+    <div class="m-3 rounded-lg bg-white p-4 shadow-md">
         <h1 class="text-lg font-semibold">Leave a Comment</h1>
         <form action="{{ route('createComment', $post->id) }}" method="POST" class="mt-3 flex flex-col gap-2">
             @csrf
@@ -75,7 +75,7 @@
             <div class="flex flex-row-reverse gap-3">
                 <button
                     class="mt-2 w-24 cursor-pointer rounded-md bg-amber-300 p-1 hover:bg-amber-400 hover:text-white">Post</button>
-                <a href="{{ route('show.landingPage') }}"
+                <a href="{{ route('show.home') }}"
                     class="mt-2 w-24 cursor-pointer rounded-md bg-gray-300 p-1 text-center hover:bg-gray-400"> Back </a>
             </div>
         </form>
