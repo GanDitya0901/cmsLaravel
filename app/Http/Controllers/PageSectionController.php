@@ -6,13 +6,39 @@ use App\Models\PageSection;
 use App\Models\Page;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
 class PageSectionController extends Controller
 {
     public function showSection(Request $request, Page $page) {
-        $pageSection = PageSection::with('page')->where('page_id', $page->id)->get();
+        $query = PageSection::with('page')->where('page_id', $page->id);
+ 
+        $date = $request->dateFilter;
+        $alphabetical = $request->alphabeticalFilter;
+
+        switch ($date) {
+            case 'today': 
+                $query->whereDate('created_at', Carbon::now());
+                break;
+            case 'yesterday':
+                $query->whereDate('created_at', Carbon::yesterday());
+                break;
+            case 'this_week':
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                break;
+        }
+
+        if($request->filled('alphabeticalFilter') && $alphabetical == 'asc') {
+            $query->orderBy('type', 'asc');
+        } elseif($request->filled('alphabeticalFilter') && $alphabetical == 'desc') {
+            $query->orderBy('type', 'desc');
+        } else {
+            $query->orderBy('id', 'asc');
+        }
+
+        $pageSection = $query->paginate(10);
 
         return view('page.section', compact('pageSection', 'page'));
     }
